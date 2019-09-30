@@ -15,6 +15,9 @@ import wade.wei.model.MyPage;
 import wade.wei.model.ParamSome;
 import wade.wei.model.RoleChildren;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class UserMapperTest {
@@ -79,7 +82,34 @@ public class UserMapperTest {
 
     @Test
     public void test4(){
+        /* 下面的 left join 不会对 count 进行优化,因为 where 条件里有 join 的表的条件 */
+        //Consume Time：7 ms 2019-09-30 10:39:10
+        // Execute SQL：SELECT COUNT(1) FROM role r LEFT JOIN user u ON r.Id = u.role_id WHERE (u.name = 'Jack' AND u.age >= 10) OR (age >= 10 AND name = 'Tom')
+        //
+        // Consume Time：0 ms 2019-09-30 10:39:10
+        // Execute SQL：select r.role_name,r.role_describe,u.id,u.name,u.age,u.email from role r left join user u on r.Id = u.role_id where (u.name = 'Jack' and u.age >= 10) or (age >= 10 and name = 'Tom') LIMIT 0,5
         MyPage<RoleChildren> userMyPage = userMapper.roleChildren(new MyPage<RoleChildren>(1, 5).setSelectInt(10).setSelectStr("Jack"), new ParamSome(10, "Tom"));
+        System.out.println(userMyPage.getRecords());
+
+        /* 下面的 left join 会对 count 进行优化,因为 where 条件里没有 join 的表的条件 */
+    }
+
+    @Test
+    public void test5(){
+        MyPage<User> userMyPage = userMapper.userSelectPage(new MyPage<User>(1, 3), new ParamSome(10, "%a%"));
+        System.out.println(userMyPage.getRecords());
+    }
+
+    @Test
+    public void test6(){
+        // Consume Time：7 ms 2019-09-30 11:04:26
+        // Execute SQL：SELECT COUNT(1) FROM user WHERE name LIKE '%a%'
+        //
+        // Consume Time：0 ms 2019-09-30 11:04:26
+        // Execute SQL：select * from user WHERE name like '%a%' LIMIT 0,3
+        HashMap<String, String> stringStringHashMap = new HashMap<>(1);
+        stringStringHashMap.put("name","%a%");
+        MyPage<User> userMyPage = userMapper.mySelectPageMap(new MyPage<User>(1, 3), stringStringHashMap);
         System.out.println(userMyPage.getRecords());
     }
 }

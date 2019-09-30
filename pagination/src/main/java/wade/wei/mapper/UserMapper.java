@@ -10,6 +10,8 @@ import wade.wei.model.MyPage;
 import wade.wei.model.ParamSome;
 import wade.wei.model.RoleChildren;
 
+import java.util.Map;
+
 /**
  * @author Administrator
  */
@@ -36,4 +38,8 @@ public interface UserMapper extends BaseMapper<User> {
             "from role r left join user u on r.Id = u.role_id " +
             "where (u.name = #{pg.selectStr} and u.age >= #{pg.selectInt}) or (age >= #{ps.yihao} and name = #{ps.erhao})")
     MyPage<RoleChildren> roleChildren(@Param("pg") MyPage<RoleChildren> myPage, @Param("ps") ParamSome paramSome);
+
+    MyPage<User> userSelectPage(@Param("pg")MyPage<User> myPage,@Param("ps")ParamSome ps);
+
+    MyPage<User> mySelectPageMap(@Param("pg") MyPage<User> myPage, @Param("map") Map param);
 }

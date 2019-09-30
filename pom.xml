@@ -6,6 +6,7 @@
     <modules>
         <module>quick-start</module>
         <module>pagination</module>
+        <module>sequence</module>
     </modules>
 
     <parent>

@@ -22,5 +22,25 @@
            or (age >= #{ps.yihao} and name = #{ps.erhao})
     </select>
 
+    <select id="userSelectPage" resultType="user">
+        select * from user
+        <where>
+            <if test="ps.yihao!=null and ps.yihao!=''">
+                age >= #{ps.yihao}
+            </if>
+             and
+            <if test="ps.erhao!=null and ps.erhao!=''">
+                name like #{ps.erhao}
+            </if>
+        </where>
+    </select>
 
+    <select id="mySelectPageMap" resultType="user">
+        select * from user
+        <where>
+            <if test="map.name!=null and map.name!=''">
+                name like #{map.name}
+            </if>
+        </where>
+    </select>
 </mapper>
