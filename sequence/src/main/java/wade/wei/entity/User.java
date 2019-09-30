@@ -1,10 +1,10 @@
 package wade.wei.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.util.Date;
 
 /**
  * @author Administrator
@@ -18,7 +18,7 @@ public class User {
     //private Long id;
 
     //@TableId(value = "id",type = IdType.UUID)
-    @TableId(value = "id",type = IdType.ID_WORKER_STR)
+    @TableId(value = "id", type = IdType.ID_WORKER_STR)
     private String id;
 
     private String name;
@@ -27,6 +27,22 @@ public class User {
 
     private String email;
 
+    @Version
+    private Long version;
+
     @TableField("role_id")
     private String roleId;
+
+    @TableField(value = "createtime", fill = FieldFill.INSERT)
+    private Date createTime;
+
+    @TableField(value = "updatetime", fill = FieldFill.UPDATE)
+    private Date updateTime;
+
+    @TableField(value = "operator", fill = FieldFill.INSERT_UPDATE)
+    private String operator;
+
+    @TableLogic
+    @TableField("deleteFlag")
+    private Integer deleteFlag;
 }
