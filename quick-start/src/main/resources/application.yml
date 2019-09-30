@@ -1,0 +1,15 @@
+server:
+  port: 8301
+#
+spring:
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://localhost:3306/mp?serverTimezone=CTT&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: root
+    password:
+
+# Logger Config
+#logging:
+#  level:
+#    wade.wei: debug
+

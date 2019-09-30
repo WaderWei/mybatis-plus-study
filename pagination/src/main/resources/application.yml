@@ -1,0 +1,13 @@
+server:
+  port: 8302
+
+#数据库连接信息
+spring:
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://localhost:3306/mp?serverTimezone=CTT&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: root
+    password:
+
+mybatis-plus:
+  type-aliases-package: wade.wei.entity;wade.wei.model
