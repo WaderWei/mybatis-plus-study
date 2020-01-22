@@ -3,10 +3,19 @@ server:
 
 spring:
   datasource:
-    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://localhost:3306/mp?serverTimezone=CTT&useSSL=false&useUnicode=true&characterEncoding=utf8
-    username: root
-    password:
+    dynamic:
+      primary: mysql
+      datasource:
+        mysql:
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+          url: jdbc:p6spy:mysql://localhost:3306/mp?serverTimezone=CTT&useSSL=false&useUnicode=true&characterEncoding=utf8
+          username: root
+          password:
+        sqlserver:
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+          url: jdbc:p6spy:sqlserver://192.168.0.122:1433;DatabaseName=course
+          username: sa
+          password: 520520
 mybatis-plus:
   global-config:
     db-config:
